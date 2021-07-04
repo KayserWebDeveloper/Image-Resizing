@@ -1,0 +1,51 @@
+#upload-section{
+  margin: 5%;
+}
+
+.logo{
+  width: 35px;
+  border-radius: 100%;
+}
+
+#title{
+  color: white;
+}
+
+#resize-field{
+  margin: 5%;
+}
+
+#resize-input-width{
+  width: 40%;
+  align-self: center;
+}
+
+#resize-input{
+  width: 30%;
+  margin: 2%;
+  margin-left:0;
+}
+
+#Inserted-image{
+  margin: 2%;
+  width: 20%;
+}
+
+footer{
+  background-color: black;
+  position:absolute;
+  bottom:0;
+  text-align: center;
+  width:100%;
+  font-family: 'Roboto', sans-serif;
+  display: inline-block;
+}
+
+.footer-text{
+  color:white;
+  padding-top: 1%;
+}
+
+.contact-info{
+  color: white;
+}

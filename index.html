@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Assignment</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="shortcut icon" href="images/share-icon.png">
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <!-- Google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <nav class="navbar navbar-light bg-dark">
+      <div class="container-fluid">
+        <span class="navbar-brand mb-0 h1" id="title">Image Resizing</span>
+        <img class="logo" src="images/K.png">
+      </div>
+    </nav>
+    <div class="container">
+      <form class="mb-6" id="upload-section">
+        <label for="fileInput" class="form-label">Upload your image</label>
+        <input class="form-control" type="file" accept="image/*" name="image" onchange="loadFile(event)" id="fileInput">
+        <div class="card text-white bg-white" id="Inserted-image">
+          <img class="card-img" id="imageSrc">
+          <div class="card-img-overlay">
+            <p>Uploaded Image</p>
+          </div>
+        </div>
+      </form>
+
+      <div class="row" id="resize-field">
+        <div class="col-lg-6">
+          <label for="inputGroup-sizing-sm" class="form-label">Enter the resolution you want in px</label>
+            <div class="input-group input-group-sm" id="resize-input">
+              <span class="input-group-text" id="inputGroup-sizing-sm">Width</span>
+              <input type="number" class="form-control" id="width" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+            </div>
+            <div class="input-group input-group-sm" id="resize-input">
+              <span class="input-group-text" id="inputGroup-sizing-sm">Height</span>
+              <input type="number" class="form-control" id="height" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+            </div>
+            <button class="btn btn-outline-dark" onclick="process()" id="resize-btn" type="submit" name="button">Re-size</button>
+        </div>
+        <div class="col-lg-6" id="download-btn">
+          <canvas id="canvasOutput"></canvas>
+          <br>
+
+        </div>
+
+      </div>
+
+      <script type="text/javascript">
+        let imgElement = document.getElementById('imageSrc');
+        let inputElement = document.getElementById('fileInput');
+
+        inputElement.addEventListener('change', (e) => {
+          imgElement.src = URL.createObjectURL(e.target.files[0]);
+        }, false);
+
+          function process() {
+
+            const width = Number(document.getElementById("width").value);
+            const height = Number(document.getElementById("height").value);
+
+            let src = cv.imread(imgElement);
+            let dst = new cv.Mat();
+            let dsize = new cv.Size(width, height);
+            cv.resize(src, dst, dsize, 0, 0, cv.INTER_AREA);
+            cv.imshow('canvasOutput', dst);
+            src.delete(); dst.delete();
+
+            var btn = document.createElement("A");
+            btn.innerHTML = "Download";
+            document.getElementById("download-btn").appendChild(btn).className = "btn btn-dark";
+            var button = document.getElementById('download-btn');
+            button.addEventListener('click', function(){
+              btn.href = document.getElementById('canvasOutput').toDataURL("image/png");
+              btn.download = "resized-image.png";
+            });
+          };
+
+      </script>
+
+    </div>
+
+    <script async src="js/opencv.js" onload="onOpenCvReady();" type="text/javascript"></script>
+
+
+  </body>
+
+  <footer> <p class="footer-text">&#169;  Made by Kayser</p></footer>
+
+
+
+</html>
